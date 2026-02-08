@@ -9,85 +9,101 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CSSスタイル（最強版：iPhone隙間なし中央寄せ） ---
+# --- CSSスタイル（極・宝石箱：iPhone隙間なし＋オーロラ艶仕様） ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap');
 
-    /* 全体の背景色 */
+    /* 1. 背景：真珠の粉（オーロラ）のアニメーション */
     .stApp {
-        background-color: #FFF3E8;
+        background: linear-gradient(135deg, #fff0f5 0%, #ffe6f2 50%, #fff0f5 100%);
+        background-size: 400% 400%;
+        animation: pearlShimmer 8s ease infinite;
+    }
+    @keyframes pearlShimmer {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
     }
     
     /* タイトル */
     h1 {
         font-family: 'Zen Maru Gothic', sans-serif;
-        color: #3E2E3A;
+        color: #5D4037; /* 優しいココアブラウン */
         text-align: center;
         font-size: 24px;
         margin-bottom: 0px;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
     }
     .subtitle {
         font-family: 'Zen Maru Gothic', sans-serif;
-        color: #3E2E3A;
+        color: #8D6E63;
         text-align: center;
         font-size: 14px;
         margin-bottom: 20px;
-        opacity: 0.8;
+        opacity: 0.9;
     }
 
-    /* 結果表示ボックス */
+    /* 2. メッセージ表示窓：キラッと光って現れる */
     .result-box {
         padding: 20px;
-        border-radius: 15px;
-        background-color: #EAE6FF;
-        border: 2px solid #EAE6FF;
-        color: #3E2E3A;
+        border-radius: 20px; /* もっと丸く */
+        background-color: rgba(255, 255, 255, 0.9); /* 半透明のガラス感 */
+        border: 2px solid #ffccdd; /* ピンクの縁取り */
+        color: #4A3B45;
         font-size: 16px;
         line-height: 1.8;
         font-family: 'Zen Maru Gothic', sans-serif;
-        box-shadow: 0 4px 10px rgba(62, 46, 58, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.3); /* ふんわり発光 */
         margin-bottom: 20px;
         min-height: 100px;
         white-space: pre-wrap;
+        animation: sparkleFadeIn 0.6s ease-out; /* ここでキラッとする */
+    }
+    @keyframes sparkleFadeIn {
+        0% { opacity: 0; transform: translateY(10px) scale(0.95); filter: blur(4px);}
+        100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0);}
     }
 
     /* カテゴリ表示 */
     .category-label {
         font-size: 12px;
-        color: #8CBFAE;
+        color: #d81b60; /* 濃いピンク */
         font-weight: bold;
         margin-bottom: 5px;
         font-family: 'Noto Sans JP', sans-serif;
     }
 
-    /* ボタンのスタイル */
+    /* 3. ボタン：つやつやピンクゴールドの飴玉🍬 */
     .stButton button {
         width: 100%;
         height: 70px;
         font-size: 16px;
         font-weight: 700;
-        color: #3E2E3A;
-        background-color: #BEE8D7;
-        border: 2px solid #8CBFAE;
-        border-radius: 12px;
+        color: #5D4037 !important; /* 文字はブラウン */
+        /* ↓ここが艶の魔法 */
+        background: linear-gradient(145deg, #ffd1dc, #ff9eb5); 
+        border: 2px solid #fff0f5; /* 白い光の縁取り */
+        border-radius: 25px; /* コロンと丸く */
         font-family: 'Noto Sans JP', sans-serif;
-        box-shadow: 0 4px 0px #8CBFAE;
-        transition: all 0.1s;
+        /* 立体的な影 */
+        box-shadow: 5px 5px 10px #e6b3cc, -5px -5px 10px #fff0f5;
+        transition: all 0.2s;
         margin-bottom: 5px;
     }
     
-    /* ボタンを押したときの動き */
+    /* ボタンを押した瞬間：内側から発光✨ */
     .stButton button:active {
-        background-color: #A8DCC8;
-        transform: translateY(4px);
-        box-shadow: 0 0px 0px #8CBFAE;
+        background: #ffb3c6;
+        transform: scale(0.96); /* むにゅっ */
+        box-shadow: inset 5px 5px 10px #dba3b8, inset -5px -5px 10px #ffcce0, 0 0 15px #ff69b4; /* ピカッ！ */
+        border-color: #ff69b4;
     }
 
-    /* 🔥 スマホでも2列を維持 + 中央寄せ + 隙間詰め（Claude先生直伝・改） 🔥 */
+    /* 🔥【重要】スマホの隙間埋め機能（これだけは絶対に残す！）🔥 */
     [data-testid="stHorizontalBlock"] {
         flex-wrap: nowrap !important;
-        gap: 0.3rem !important;
+        gap: 0.3rem !important; /* 隙間を詰める */
         justify-content: center !important;
         max-width: 400px !important;
         margin: 0 auto !important;
@@ -103,6 +119,7 @@ st.markdown("""
     header {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
+
 
 # --- 💖 膨大な愛のデータ (Part 1) ---
 pitodata = {
