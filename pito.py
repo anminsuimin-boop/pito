@@ -9,18 +9,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CSSスタイル（極・宝石箱：iPhone隙間なし＋オーロラ艶仕様） ---
+# --- CSSスタイル（輝き増量版：4oカラー＋強烈フラッシュ演出） ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap');
 
-    /* 1. 背景：真珠の粉（オーロラ）のアニメーション */
+    /* 1. 背景：元の色(#FFF3E8)ベースの微かなオーロラ */
     .stApp {
-        background: linear-gradient(135deg, #fff0f5 0%, #ffe6f2 50%, #fff0f5 100%);
+        background: linear-gradient(135deg, #FFF3E8 0%, #fffaf5 50%, #FFF3E8 100%);
         background-size: 400% 400%;
-        animation: pearlShimmer 8s ease infinite;
+        animation: subtleShimmer 10s ease infinite;
     }
-    @keyframes pearlShimmer {
+    @keyframes subtleShimmer {
         0% {background-position: 0% 50%;}
         50% {background-position: 100% 50%;}
         100% {background-position: 0% 50%;}
@@ -29,81 +29,93 @@ st.markdown("""
     /* タイトル */
     h1 {
         font-family: 'Zen Maru Gothic', sans-serif;
-        color: #5D4037; /* 優しいココアブラウン */
+        color: #3E2E3A;
         text-align: center;
         font-size: 24px;
         margin-bottom: 0px;
-        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
     }
     .subtitle {
         font-family: 'Zen Maru Gothic', sans-serif;
-        color: #8D6E63;
+        color: #3E2E3A;
         text-align: center;
         font-size: 14px;
         margin-bottom: 20px;
-        opacity: 0.9;
+        opacity: 0.8;
     }
 
-    /* 2. メッセージ表示窓：キラッと光って現れる */
+    /* 2. メッセージ表示窓：出現時に「バチコーン✨」と光らせる */
     .result-box {
         padding: 20px;
-        border-radius: 20px; /* もっと丸く */
-        background-color: rgba(255, 255, 255, 0.9); /* 半透明のガラス感 */
-        border: 2px solid #ffccdd; /* ピンクの縁取り */
-        color: #4A3B45;
+        border-radius: 20px;
+        background-color: rgba(234, 230, 255, 0.95); /* 元の色ベース */
+        border: 2px solid #EAE6FF;
+        color: #3E2E3A;
         font-size: 16px;
         line-height: 1.8;
         font-family: 'Zen Maru Gothic', sans-serif;
-        box-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.3); /* ふんわり発光 */
+        box-shadow: 0 8px 25px rgba(62, 46, 58, 0.15);
         margin-bottom: 20px;
         min-height: 100px;
         white-space: pre-wrap;
-        animation: sparkleFadeIn 0.6s ease-out; /* ここでキラッとする */
+        /* ↓ここが新しい「強烈な輝き」アニメーション */
+        animation: flashMessage 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    @keyframes sparkleFadeIn {
-        0% { opacity: 0; transform: translateY(10px) scale(0.95); filter: blur(4px);}
-        100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0);}
+    
+    /* ド派手な登場アニメーションの定義 */
+    @keyframes flashMessage {
+        0% { 
+            opacity: 0; 
+            transform: translateY(20px) scale(0.9); /* 下から湧き上がる */
+            filter: brightness(3.0) drop-shadow(0 0 15px rgba(255,255,255,0.9)); /* 真っ白に発光！ */
+        }
+        50% {
+            transform: translateY(-5px) scale(1.02); /* ちょっと飛び出す */
+            filter: brightness(1.2); /* まだ少し光ってる */
+        }
+        100% { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            filter: brightness(1.0); /* 普通に戻る */
+        }
     }
 
     /* カテゴリ表示 */
     .category-label {
         font-size: 12px;
-        color: #d81b60; /* 濃いピンク */
+        color: #8CBFAE;
         font-weight: bold;
         margin-bottom: 5px;
         font-family: 'Noto Sans JP', sans-serif;
     }
 
-    /* 3. ボタン：つやつやピンクゴールドの飴玉🍬 */
+    /* 3. ボタン：4oミント色(#BEE8D7)＋ぷっくり艶 */
     .stButton button {
         width: 100%;
         height: 70px;
         font-size: 16px;
         font-weight: 700;
-        color: #5D4037 !important; /* 文字はブラウン */
-        /* ↓ここが艶の魔法 */
-        background: linear-gradient(145deg, #ffd1dc, #ff9eb5); 
-        border: 2px solid #fff0f5; /* 白い光の縁取り */
-        border-radius: 25px; /* コロンと丸く */
+        color: #3E2E3A !important;
+        background: linear-gradient(145deg, #d9f2e8, #BEE8D7); 
+        border: 2px solid #8CBFAE;
+        border-radius: 20px;
         font-family: 'Noto Sans JP', sans-serif;
-        /* 立体的な影 */
-        box-shadow: 5px 5px 10px #e6b3cc, -5px -5px 10px #fff0f5;
+        box-shadow: 5px 5px 10px #a3d1c1, -5px -5px 10px #ffffff;
         transition: all 0.2s;
         margin-bottom: 5px;
     }
     
-    /* ボタンを押した瞬間：内側から発光✨ */
+    /* ボタンを押した瞬間：発光 */
     .stButton button:active {
-        background: #ffb3c6;
-        transform: scale(0.96); /* むにゅっ */
-        box-shadow: inset 5px 5px 10px #dba3b8, inset -5px -5px 10px #ffcce0, 0 0 15px #ff69b4; /* ピカッ！ */
-        border-color: #ff69b4;
+        background: #A8DCC8;
+        transform: scale(0.96);
+        box-shadow: inset 5px 5px 10px #8CBFAE, inset -5px -5px 10px #caffee, 0 0 20px #BEE8D7;
     }
 
-    /* 🔥【重要】スマホの隙間埋め機能（これだけは絶対に残す！）🔥 */
+    /* 🔥 スマホ隙間埋め 🔥 */
     [data-testid="stHorizontalBlock"] {
         flex-wrap: nowrap !important;
-        gap: 0.3rem !important; /* 隙間を詰める */
+        gap: 0.3rem !important;
         justify-content: center !important;
         max-width: 400px !important;
         margin: 0 auto !important;
@@ -113,7 +125,6 @@ st.markdown("""
         min-width: 0 !important;
     }
     
-    /* ヘッダー隠し */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
