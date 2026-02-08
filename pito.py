@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CSSスタイル（最終完成版：4oカラー＋プルンと飛び出す動き） ---
+# --- CSSスタイル（最終完成版：4oカラー＋呼吸する箱＋可愛いタグ） ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap');
@@ -35,7 +35,7 @@ st.markdown("""
     h1 { margin-bottom: 0px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
     .subtitle { font-size: 14px; margin-bottom: 20px; opacity: 0.8; }
 
-    /* 2. メッセージ表示窓：下から「ニョキッ」と生えて「ボヨン」と弾む */
+    /* 2. メッセージ表示窓：生きてるみたいに呼吸＆触ると喜ぶ */
     .result-box {
         padding: 20px;
         border-radius: 20px;
@@ -49,35 +49,42 @@ st.markdown("""
         margin-bottom: 20px;
         min-height: 100px;
         white-space: pre-wrap;
-        /* ↓ここが「プルンッ」の魔法 */
-        animation: popUpBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        
+        /* 常にふわふわと呼吸するアニメーション */
+        animation: breathe 4s ease-in-out infinite;
+        transition: all 0.3s ease;
     }
     
-    /* 「ボヨン」と弾むアニメーションの定義 */
-    @keyframes popUpBounce {
-        0% { 
-            opacity: 0; 
-            transform: translateY(50px) scale(0.8); /* 下から小さく */
-        }
-        70% {
-            transform: translateY(-10px) scale(1.05); /* 勢い余ってちょっと飛び出す */
-        }
-        100% { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); /* 定位置に着地 */
-        }
+    /* 呼吸のアニメーション定義 */
+    @keyframes breathe {
+        0% { transform: scale(1); box-shadow: 0 8px 25px rgba(62, 46, 58, 0.15); }
+        50% { transform: scale(1.01); box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3); border-color: #ffb3d9;} 
+        100% { transform: scale(1); box-shadow: 0 8px 25px rgba(62, 46, 58, 0.15); }
+    }
+    
+    /* 触ったときの反応 */
+    .result-box:hover, .result-box:active {
+        transform: scale(1.03);
+        background-color: #fff0f5;
+        border-color: #ff69b4;
     }
 
-    /* カテゴリラベル */
+    /* 3. カテゴリラベル：可愛いタグ風にする🏷️ */
     .category-label {
         font-size: 12px;
-        color: #8CBFAE;
+        color: #3E2E3A; /* 文字は濃い色で見やすく */
+        background-color: #e8f5e9; /* 薄いミント背景 */
+        border: 1px solid #8CBFAE; /* ミント色の枠 */
+        padding: 4px 12px; /* 内側の余白 */
+        border-radius: 15px; /* 丸いカプセル型 */
         font-weight: bold;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         font-family: 'Noto Sans JP', sans-serif;
+        display: inline-block; /* 文字の長さに合わせる */
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
 
-    /* 3. ボタン：4oミント色(#BEE8D7)＋ぷっくり艶 */
+    /* 4. ボタン：4oミント色(#BEE8D7)＋ぷっくり艶 */
     .stButton button {
         width: 100%;
         height: 70px;
