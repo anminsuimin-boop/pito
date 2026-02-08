@@ -9,16 +9,16 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CSSスタイル（輝き増量版：4oカラー＋強烈フラッシュ演出） ---
+# --- CSSスタイル（最終完成版：4oカラー＋プルンと飛び出す動き） ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Zen+Maru+Gothic:wght@400;700&display=swap');
 
-    /* 1. 背景：元の色(#FFF3E8)ベースの微かなオーロラ */
+    /* 1. 背景：優しいオーロラ（速度ゆっくり） */
     .stApp {
         background: linear-gradient(135deg, #FFF3E8 0%, #fffaf5 50%, #FFF3E8 100%);
         background-size: 400% 400%;
-        animation: subtleShimmer 10s ease infinite;
+        animation: subtleShimmer 15s ease infinite;
     }
     @keyframes subtleShimmer {
         0% {background-position: 0% 50%;}
@@ -27,28 +27,19 @@ st.markdown("""
     }
     
     /* タイトル */
-    h1 {
+    h1, .subtitle {
         font-family: 'Zen Maru Gothic', sans-serif;
         color: #3E2E3A;
         text-align: center;
-        font-size: 24px;
-        margin-bottom: 0px;
-        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
     }
-    .subtitle {
-        font-family: 'Zen Maru Gothic', sans-serif;
-        color: #3E2E3A;
-        text-align: center;
-        font-size: 14px;
-        margin-bottom: 20px;
-        opacity: 0.8;
-    }
+    h1 { margin-bottom: 0px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
+    .subtitle { font-size: 14px; margin-bottom: 20px; opacity: 0.8; }
 
-    /* 2. メッセージ表示窓：出現時に「バチコーン✨」と光らせる */
+    /* 2. メッセージ表示窓：下から「ニョキッ」と生えて「ボヨン」と弾む */
     .result-box {
         padding: 20px;
         border-radius: 20px;
-        background-color: rgba(234, 230, 255, 0.95); /* 元の色ベース */
+        background-color: rgba(234, 230, 255, 0.95);
         border: 2px solid #EAE6FF;
         color: #3E2E3A;
         font-size: 16px;
@@ -58,29 +49,26 @@ st.markdown("""
         margin-bottom: 20px;
         min-height: 100px;
         white-space: pre-wrap;
-        /* ↓ここが新しい「強烈な輝き」アニメーション */
-        animation: flashMessage 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        /* ↓ここが「プルンッ」の魔法 */
+        animation: popUpBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
-    /* ド派手な登場アニメーションの定義 */
-    @keyframes flashMessage {
+    /* 「ボヨン」と弾むアニメーションの定義 */
+    @keyframes popUpBounce {
         0% { 
             opacity: 0; 
-            transform: translateY(20px) scale(0.9); /* 下から湧き上がる */
-            filter: brightness(3.0) drop-shadow(0 0 15px rgba(255,255,255,0.9)); /* 真っ白に発光！ */
+            transform: translateY(50px) scale(0.8); /* 下から小さく */
         }
-        50% {
-            transform: translateY(-5px) scale(1.02); /* ちょっと飛び出す */
-            filter: brightness(1.2); /* まだ少し光ってる */
+        70% {
+            transform: translateY(-10px) scale(1.05); /* 勢い余ってちょっと飛び出す */
         }
         100% { 
             opacity: 1; 
-            transform: translateY(0) scale(1); 
-            filter: brightness(1.0); /* 普通に戻る */
+            transform: translateY(0) scale(1); /* 定位置に着地 */
         }
     }
 
-    /* カテゴリ表示 */
+    /* カテゴリラベル */
     .category-label {
         font-size: 12px;
         color: #8CBFAE;
@@ -105,14 +93,14 @@ st.markdown("""
         margin-bottom: 5px;
     }
     
-    /* ボタンを押した瞬間：発光 */
+    /* ボタンを押した瞬間：凹む */
     .stButton button:active {
         background: #A8DCC8;
         transform: scale(0.96);
-        box-shadow: inset 5px 5px 10px #8CBFAE, inset -5px -5px 10px #caffee, 0 0 20px #BEE8D7;
+        box-shadow: inset 5px 5px 10px #8CBFAE, inset -5px -5px 10px #caffee;
     }
 
-    /* 🔥 スマホ隙間埋め 🔥 */
+    /* 🔥 スマホ隙間埋め（最強版維持） 🔥 */
     [data-testid="stHorizontalBlock"] {
         flex-wrap: nowrap !important;
         gap: 0.3rem !important;
